@@ -1,0 +1,12 @@
+﻿@page "{id:int}"
+@model EventManager.Pages.Events.EditModel
+
+<form method="post">
+    <input type="hidden" asp-for="Event.Id" />
+
+    <input asp-for="Event.location" />
+    <input asp-for="Event.EventDate" type="date" />
+    <input asp-for="Event.EventId" />
+
+    <button type="submit">Сохранить</button>
+</form>

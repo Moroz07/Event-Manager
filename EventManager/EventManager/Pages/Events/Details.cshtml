@@ -1,0 +1,16 @@
+﻿@page "{id:int}"
+@model EventManager.Pages.Events.DetailsModel
+@{
+}
+
+<h1>Информация о мероприятии</h1>
+
+<div>
+    <p><strong>Дата проведения:</strong> @Model.Event.EventDate.ToShortDateString()</p>
+    <p><strong>Место проведения:</strong> @Model.Event.location</p>
+    <p><strong>Номер мероприятия:</strong> @Model.Event.EventId</p>
+</div>
+
+<p>
+    <a asp-page="Index">Назад к списку</a>
+</p>
