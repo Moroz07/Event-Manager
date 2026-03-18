@@ -6,15 +6,16 @@ using EventManager.Model;
 
 namespace EventManager.Pages.Events
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly ApplicationDbContext _context;
 
-        public DetailsModel(ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
         public Event? Event { get; set; }
 
         public IActionResult OnGet(int id)
@@ -26,6 +27,19 @@ namespace EventManager.Pages.Events
                 return NotFound();
 
             return Page();
+        }
+
+        public IActionResult OnPost()
+        {
+            var eventToDelete = _context.Events.Find(Event.Id);
+
+            if (eventToDelete != null)
+            {
+                _context.Events.Remove(eventToDelete);
+                _context.SaveChanges();
+            }
+
+            return RedirectToPage("Index");
         }
     }
 }

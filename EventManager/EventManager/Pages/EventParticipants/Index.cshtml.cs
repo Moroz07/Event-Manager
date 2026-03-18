@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using EventManager.Data;
 using EventManager.Model;
 
-namespace EventManager.Pages.Events
+namespace EventManager.Pages.Participants
 {
     public class IndexModel : PageModel
     {
@@ -15,11 +14,11 @@ namespace EventManager.Pages.Events
             _context = context;
         }
 
-        public List<Event> Events { get; set; }
+        public List<EventParticipsnt> Participants { get; set; }
 
         public void OnGet()
         {
-            Events = _context.Events.ToList();  
+            Participants = _context.EventsParticipsnt.ToList();
         }
     }
 }

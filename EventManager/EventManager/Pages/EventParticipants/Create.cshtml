@@ -1,0 +1,63 @@
+﻿@page
+@model EventManager.Pages.Participants.CreateModel
+@{
+    ViewData["Title"] = "Добавить участника";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Добавить участника</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="Participant.Name" class="form-label">Имя</label>
+                            <input asp-for="Participant.Name" class="form-control" />
+                            <span asp-validation-for="Participant.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Participant.LastName" class="form-label">Фамилия</label>
+                            <input asp-for="Participant.LastName" class="form-control" />
+                            <span asp-validation-for="Participant.LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Participant.Email" class="form-label">Email</label>
+                            <input asp-for="Participant.Email" type="email" class="form-control" />
+                            <span asp-validation-for="Participant.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Participant.Phone" class="form-label">Телефон</label>
+                            <input asp-for="Participant.Phone" class="form-control" />
+                            <span asp-validation-for="Participant.Phone" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Participant.EventId" class="form-label">ID мероприятия</label>
+                            <input asp-for="Participant.EventId" type="number" class="form-control" />
+                            <span asp-validation-for="Participant.EventId" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="Index" class="btn btn-secondary">
+                                Назад
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                Сохранить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using EventManager.Data;
 using EventManager.Model;
 
-namespace EventManager.Pages.Events
+namespace EventManager.Pages.Participants
 {
     public class DetailsModel : PageModel
     {
@@ -15,14 +14,13 @@ namespace EventManager.Pages.Events
             _context = context;
         }
 
-        public Event? Event { get; set; }
+        public EventParticipsnt? Participant { get; set; }
 
         public IActionResult OnGet(int id)
         {
-            Event = _context.Events
-                        .FirstOrDefault(e => e.Id == id);
+            Participant = _context.EventsParticipsnt.FirstOrDefault(p => p.Id == id);
 
-            if (Event == null)
+            if (Participant == null)
                 return NotFound();
 
             return Page();

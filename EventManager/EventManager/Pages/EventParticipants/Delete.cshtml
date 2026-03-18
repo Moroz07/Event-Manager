@@ -1,0 +1,51 @@
+﻿@page "{id:int}"
+@model EventManager.Pages.Participants.DeleteModel
+@{
+    ViewData["Title"] = "Удалить участника";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-danger shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Удалить участника</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="alert alert-warning">
+                        Вы уверены, что хотите удалить этого участника?
+                    </div>
+
+                    <div class="mb-3">
+                        <h5 class="card-title">👤 @Model.Participant.Name @Model.Participant.LastName</h5>
+
+                        <p class="card-text">
+                            <strong>Email:</strong> @Model.Participant.Email
+                        </p>
+                        <p class="card-text">
+                            <strong>Телефон:</strong> @Model.Participant.Phone
+                        </p>
+                        <p class="card-text">
+                            <strong>ID мероприятия:</strong> 
+                            <span class="badge bg-secondary">@Model.Participant.EventId</span>
+                        </p>
+                    </div>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="Participant.Id" />
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="Index" class="btn btn-secondary">
+                                Отмена
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                Удалить
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

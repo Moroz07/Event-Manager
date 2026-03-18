@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using EventManager.Data;
 using EventManager.Model;
 
-namespace EventManager.Pages.Events
+namespace EventManager.Pages.Participants
 {
     public class CreateModel : PageModel
     {
@@ -15,7 +15,7 @@ namespace EventManager.Pages.Events
         }
 
         [BindProperty]
-        public Event Event { get; set; }
+        public EventParticipsnt Participant { get; set; }
 
         public void OnGet() { }
 
@@ -24,7 +24,7 @@ namespace EventManager.Pages.Events
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Events.Add(Event);
+            _context.EventsParticipsnt.Add(Participant);
             _context.SaveChanges();
 
             return RedirectToPage("Index");
