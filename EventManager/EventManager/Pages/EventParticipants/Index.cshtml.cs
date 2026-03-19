@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using EventManager.Data;
 using EventManager.Model;
 
-namespace EventManager.Pages.Participants
+namespace EventManager.Pages.EventParticipants
 {
     public class IndexModel : PageModel
     {

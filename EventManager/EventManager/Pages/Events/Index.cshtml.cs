@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using EventManager.Data;
 using EventManager.Model;
 
@@ -19,7 +18,7 @@ namespace EventManager.Pages.Events
 
         public void OnGet()
         {
-            Events = _context.Events.ToList();  
+            Events = _context.Events.ToList();
         }
     }
 }

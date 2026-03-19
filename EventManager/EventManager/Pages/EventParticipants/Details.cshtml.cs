@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using EventManager.Data;
 using EventManager.Model;
 
-namespace EventManager.Pages.Participants
+namespace EventManager.Pages.EventParticipants
 {
     public class DetailsModel : PageModel
     {
@@ -14,7 +14,7 @@ namespace EventManager.Pages.Participants
             _context = context;
         }
 
-        public EventParticipsnt? Participant { get; set; }
+        public EventParticipsnt Participant { get; set; }
 
         public IActionResult OnGet(int id)
         {

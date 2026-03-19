@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using EventManager.Data;
 using EventManager.Model;
 
-namespace EventManager.Pages.Participants
+namespace EventManager.Pages.EventParticipants
 {
     public class DeleteModel : PageModel
     {
@@ -15,11 +15,11 @@ namespace EventManager.Pages.Participants
         }
 
         [BindProperty]
-        public EventParticipsnt? Participant { get; set; }
+        public EventParticipsnt Participant { get; set; }
 
         public IActionResult OnGet(int id)
         {
-            Participant = _context.EventsParticipsnt.FirstOrDefault(p => p.Id == id);
+            Participant = _context.EventsParticipsnt.Find(id);
 
             if (Participant == null)
                 return NotFound();

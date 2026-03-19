@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using EventManager.Data;
 using EventManager.Model;
 
@@ -15,12 +14,11 @@ namespace EventManager.Pages.Events
             _context = context;
         }
 
-        public Event? Event { get; set; }
+        public Event Event { get; set; }
 
         public IActionResult OnGet(int id)
         {
-            Event = _context.Events
-                        .FirstOrDefault(e => e.Id == id);
+            Event = _context.Events.FirstOrDefault(e => e.Id == id);
 
             if (Event == null)
                 return NotFound();
