@@ -1,0 +1,22 @@
+﻿@page "{id:int}"
+@model EventManager.Pages.EventParticipants.DeleteModel
+@{
+}
+
+<h1>Удалить участника</h1>
+
+<h3>Вы уверены?</h3>
+
+<div>
+    <p><strong>@Model.Participant.Name @Model.Participant.LastName</strong></p>
+    <p>Email: @Model.Participant.Email</p>
+    <p>Телефон: @Model.Participant.Phone</p>
+    <p>ID мероприятия: @Model.Participant.EventId</p>
+</div>
+
+<form method="post">
+    <input type="hidden" asp-for="Participant.Id" />
+    <button type="submit">Удалить</button>
+</form>
+
+<a asp-page="Index">Отмена</a>

@@ -1,0 +1,40 @@
+﻿@page
+@model EventManager.Pages.EventParticipants.IndexModel
+@{
+}
+
+<h1>Список участников</h1>
+
+<p>
+    <a asp-page="Create">Добавить нового участника</a>
+</p>
+
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Email</th>
+            <th>Телефон</th>
+            <th>ID мероприятия</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var participant in Model.Participants)
+        {
+            <tr>
+                <td>@participant.Name</td>
+                <td>@participant.LastName</td>
+                <td>@participant.Email</td>
+                <td>@participant.Phone</td>
+                <td>@participant.EventId</td>
+                <td>
+                    <a asp-page="Details" asp-route-id="@participant.Id">Открыть</a>
+                    <a asp-page="Edit" asp-route-id="@participant.Id">Изменить</a>
+                    <a asp-page="Delete" asp-route-id="@participant.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

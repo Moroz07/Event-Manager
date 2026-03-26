@@ -1,0 +1,38 @@
+﻿@page
+@model EventManager.Pages.Events.IndexModel
+@{
+}
+
+<h1>Список мероприятий</h1>
+
+<p>
+    <a asp-page="Create">Добавить новое мероприятие</a>
+</p>
+
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Дата проведения</th>
+            <th>Место проведения</th>
+            <th>Номер мероприятия</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var eventItem in Model.Events)
+        {
+            <tr>
+                <td>@eventItem.Name</td>
+                <td>@eventItem.EventDate.ToShortDateString()</td>
+                <td>@eventItem.location</td>
+                <td>@eventItem.EventId</td>
+                <td>
+                    <a asp-page="Details" asp-route-id="@eventItem.Id">Открыть</a>
+                    <a asp-page="Edit" asp-route-id="@eventItem.Id">Изменить</a>
+                    <a asp-page="Delete" asp-route-id="@eventItem.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

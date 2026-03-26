@@ -1,0 +1,39 @@
+﻿@page
+@model EventManager.Pages.Events.CreateModel
+@{
+}
+
+<h1>Добавить мероприятие</h1>
+
+<form method="post">
+    <div>
+        <label>Название</label><br />
+        <input asp-for="Event.Name" />
+        <span asp-validation-for="Event.Name"></span>
+    </div>
+
+    <div>
+        <label>Описание</label><br />
+        <input asp-for="Event.Description" />
+        <span asp-validation-for="Event.Description"></span>
+    </div>
+
+    <div>
+        <label>Дата проведения</label><br />
+        <input asp-for="Event.EventDate" type="date" />
+    </div>
+
+    <div>
+        <label>Место проведения</label><br />
+        <input asp-for="Event.location" />
+    </div>
+
+    <div>
+        <label>Номер мероприятия</label><br />
+        <input asp-for="Event.EventId" type="number" />
+    </div>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a asp-page="Index">Назад</a>
