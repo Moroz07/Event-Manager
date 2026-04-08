@@ -1,10 +1,8 @@
-﻿namespace EventManager.Model
+﻿using EventManager.Model;
+
+public class Event : EFModel
 {
-    public class Event : EFModel
-    {
-        public string? Description { get; set; }
-        public DateTime EventDate { get; set; }
-        public string location { get; set; }
-        public int? EventId { get; set; }
-    }
+    public DateTime EventDate { get; set; }  // было EventDate, пусть так и остаётся
+    public string location { get; set; }
+    public List<EventParticipsnt> Participants { get; set; } = new List<EventParticipsnt>();
 }
