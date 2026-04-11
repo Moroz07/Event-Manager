@@ -14,7 +14,7 @@ namespace EventManager.Pages.EventParticipants
         {
             Participant = _context.EventsParticipsnt.Find(id);
             if (Participant == null) return NotFound();
-            return Page();
+            return Page(); 
         }
         public IActionResult OnPost()
         {
