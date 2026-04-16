@@ -17,14 +17,17 @@
                         <div class="mb-3">
                             <label asp-for="Event.Name" class="form-label">Название мероприятия</label>
                             <input asp-for="Event.Name" class="form-control" />
+                            <span asp-validation-for="Event.Name" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label asp-for="Event.EventDate" class="form-label">Дата проведения</label>
                             <input asp-for="Event.EventDate" type="date" class="form-control" />
+                            <span asp-validation-for="Event.EventDate" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label asp-for="Event.location" class="form-label">Место проведения</label>
                             <input asp-for="Event.location" class="form-control" />
+                            <span asp-validation-for="Event.location" class="text-danger"></span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <a asp-page="Index" class="btn btn-secondary">Назад к списку</a>
