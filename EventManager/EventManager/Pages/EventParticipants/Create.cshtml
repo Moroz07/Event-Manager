@@ -34,8 +34,10 @@
                             <span asp-validation-for="Participant.Phone" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="Participant.EventId" class="form-label">ID мероприятия</label>
-                            <input asp-for="Participant.EventId" type="number" class="form-control" />
+                            <label asp-for="Participant.EventId" class="form-label">Мероприятие</label>
+                            <select asp-for="Participant.EventId" class="form-control" asp-items="Model.EventsList">
+                                <option value="">-- Выберите мероприятие --</option>
+                            </select>
                             <span asp-validation-for="Participant.EventId" class="text-danger"></span>
                         </div>
                         <div class="d-flex justify-content-between">

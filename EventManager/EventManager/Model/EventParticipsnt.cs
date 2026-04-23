@@ -1,9 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace EventManager.Model
 {
     public class EventParticipsnt : EFModel
     {
+        [Required(ErrorMessage = "Имя обязательно")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Имя должно быть от 2 до 50 символов")]
+        public new string Name { get; set; }
+
         [Required(ErrorMessage = "Фамилия обязательна")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Фамилия должна быть от 2 до 50 символов")]
         public string LastName { get; set; }
@@ -18,9 +23,9 @@ namespace EventManager.Model
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Выберите мероприятие")]
-        [Range(1, int.MaxValue, ErrorMessage = "Выберите существующее мероприятие")]
         public int EventId { get; set; }
 
+        [ValidateNever]
         public Event Event { get; set; }
     }
 }
