@@ -22,6 +22,7 @@ namespace EventManager.Model
         [StringLength(20, MinimumLength = 10, ErrorMessage = "Телефон должен быть от 10 до 20 символов")]
         public string Phone { get; set; }
 
+
         [Required(ErrorMessage = "Выберите мероприятие")]
         public int EventId { get; set; }
 
