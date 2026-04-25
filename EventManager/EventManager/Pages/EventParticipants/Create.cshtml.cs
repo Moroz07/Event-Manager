@@ -39,6 +39,7 @@ namespace EventManager.Pages.EventParticipants
 
         public IActionResult OnPost()
         {
+            var temp = Participant;
 
             if (!ModelState.IsValid)
             {
