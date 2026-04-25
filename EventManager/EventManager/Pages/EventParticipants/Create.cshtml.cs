@@ -26,6 +26,7 @@ namespace EventManager.Pages.EventParticipants
             LoadEventsList();
         }
 
+
         private void LoadEventsList()
         {
             EventsList = _context.Events
