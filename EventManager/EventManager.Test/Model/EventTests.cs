@@ -19,6 +19,7 @@ namespace EventManager.Test.UnitTests.Model
                 Name = "Концерт",
                 EventDate = DateTime.Now.AddDays(30),
                 location = "Москва"
+
             };
 
 
