@@ -32,14 +32,19 @@ namespace EventManager.Pages.Account.Users
 
         public async Task<IActionResult> OnPostAsync(IFormFile? AvatarFile)
         {
-            // Заполняем Name из Email, если пустой
+
+            var existingUser = await _context.AuthUsers.AsNoTracking().FirstOrDefaultAsync(u => u.Id == User.Id);
+
+            if (existingUser == null)
+                return NotFound();
+
+
             if (string.IsNullOrEmpty(User.Name) && !string.IsNullOrEmpty(User.Email))
             {
                 User.Name = User.Email;
             }
 
-            // Обновляем аватар, если загружен новый файл
-            if (AvatarFile != null)
+            if (AvatarFile != null && AvatarFile.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
                 {
@@ -47,11 +52,15 @@ namespace EventManager.Pages.Account.Users
                     User.Avatar = memoryStream.ToArray();
                 }
             }
+            else
+            {
+                User.Avatar = existingUser.Avatar;
+            }
 
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.Attach(User).State = EntityState.Modified;
+            _context.AuthUsers.Update(User);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("Index");

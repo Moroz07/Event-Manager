@@ -2,7 +2,7 @@
 {
     public class AuthUser : EFModel
     {
-        public new string Name { get; set; } = "Name";
+        public new string Name { get; set; } = "Пользователь";
 
         public string Email { get; set; }
         public string Password { get; set; }
