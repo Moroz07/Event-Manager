@@ -25,6 +25,11 @@ namespace EventManager.Pages.Account.Users
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // Заполняем Name из Email
+            if (User != null && !string.IsNullOrEmpty(User.Email))
+            {
+                User.Name = User.Email;
+            }
 
             if (!ModelState.IsValid)
             {

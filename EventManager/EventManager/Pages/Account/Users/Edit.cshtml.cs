@@ -30,8 +30,24 @@ namespace EventManager.Pages.Account.Users
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile? AvatarFile)
         {
+            // Заполняем Name из Email, если пустой
+            if (string.IsNullOrEmpty(User.Name) && !string.IsNullOrEmpty(User.Email))
+            {
+                User.Name = User.Email;
+            }
+
+            // Обновляем аватар, если загружен новый файл
+            if (AvatarFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await AvatarFile.CopyToAsync(memoryStream);
+                    User.Avatar = memoryStream.ToArray();
+                }
+            }
+
             if (!ModelState.IsValid)
                 return Page();
 
