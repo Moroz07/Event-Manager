@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using EventManager.Data;
-using EventManager.Model;
+using EventManager.Model.AuthApp;
 
-namespace EventManager.Pages.EventParticipants
+namespace EventManager.Pages.Account.Users
 {
     [Authorize]
     public class IndexModel : PageModel
@@ -16,11 +17,11 @@ namespace EventManager.Pages.EventParticipants
             _context = context;
         }
 
-        public List<EventParticipsnt> Participants { get; set; }
+        public IList<AuthUser> Users { get; set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            Participants = _context.EventsParticipsnt.ToList();
+            Users = await _context.AuthUsers.ToListAsync();
         }
     }
 }

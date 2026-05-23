@@ -1,4 +1,5 @@
 ﻿using EventManager.Model;
+using EventManager.Model.AuthApp;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventManager.Data
@@ -14,6 +15,7 @@ namespace EventManager.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<EventParticipsnt> EventsParticipsnt { get; set; }
 
+        public DbSet<AuthUser> AuthUsers { get; set; }
 
     }
 }

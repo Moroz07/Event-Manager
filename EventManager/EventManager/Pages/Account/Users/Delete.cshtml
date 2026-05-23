@@ -1,0 +1,37 @@
+﻿@page
+@model EventManager.Pages.Account.Users.DeleteModel
+@{
+}
+
+<div class="container mt-4">
+
+    <h2>Удалить пользователя</h2>
+
+    <div class="alert alert-danger">
+        Вы уверены, что хотите удалить этого пользователя?
+    </div>
+
+    <ul class="list-group mb-3">
+        <li class="list-group-item">
+            <b>Email:</b> @Model.User.Email
+        </li>
+        <li class="list-group-item">
+            <b>Роль:</b> @Model.User.Role
+        </li>
+    </ul>
+
+    <form method="post">
+
+        <input type="hidden" asp-for="User.Id" />
+
+        <button type="submit" class="btn btn-danger">
+            Удалить
+        </button>
+
+        <a asp-page="Index" class="btn btn-secondary">
+            Отмена
+        </a>
+
+    </form>
+
+</div>

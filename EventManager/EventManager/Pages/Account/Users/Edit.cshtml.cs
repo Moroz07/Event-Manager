@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using EventManager.Data;
-using EventManager.Model;
+using EventManager.Model.AuthApp;
 
-namespace EventManager.Pages.EventParticipants
+namespace EventManager.Pages.Account.Users
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -17,25 +18,25 @@ namespace EventManager.Pages.EventParticipants
         }
 
         [BindProperty]
-        public EventParticipsnt Participant { get; set; }
+        public AuthUser User { get; set; }
 
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Participant = _context.EventsParticipsnt.Find(id);
+            User = await _context.AuthUsers.FindAsync(id);
 
-            if (Participant == null)
+            if (User == null)
                 return NotFound();
 
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
 
-            _context.EventsParticipsnt.Update(Participant);
-            _context.SaveChanges();
+            _context.Attach(User).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("Index");
         }
