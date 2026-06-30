@@ -1,38 +1,33 @@
 ﻿@page
 @model EventManager.Pages.Events.IndexModel
 @{
+    ViewData["Title"] = "Список мероприятий";
 }
 
-<h1>Список мероприятий</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Список мероприятий</h2>
+        <a asp-page="Create" class="btn btn-success">Добавить новое мероприятие</a>
+    </div>
 
-<p>
-    <a asp-page="Create">Добавить новое мероприятие</a>
-</p>
-
-<table border="1" cellpadding="5">
-    <thead>
-        <tr>
-            <th>Название</th>
-            <th>Дата проведения</th>
-            <th>Место проведения</th>
-            <th>Номер мероприятия</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="row g-4">
         @foreach (var eventItem in Model.Events)
         {
-            <tr>
-                <td>@eventItem.Name</td>
-                <td>@eventItem.EventDate.ToShortDateString()</td>
-                <td>@eventItem.location</td>
-                <td>@eventItem.EventId</td>
-                <td>
-                    <a asp-page="Details" asp-route-id="@eventItem.Id">Открыть</a>
-                    <a asp-page="Edit" asp-route-id="@eventItem.Id">Изменить</a>
-                    <a asp-page="Delete" asp-route-id="@eventItem.Id">Удалить</a>
-                </td>
-            </tr>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate">📅 @eventItem.Name</h5>
+                        <p class="card-text text-muted mb-1"><strong>Дата:</strong> @eventItem.EventDate.ToShortDateString()</p>
+                        <p class="card-text text-muted mb-1"><strong>Место:</strong> @eventItem.location</p>
+                        <p class="card-text mb-2"><span class="badge bg-secondary">№ @eventItem.Id</span></p>
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="Details" asp-route-id="@eventItem.Id" class="btn btn-sm btn-info">Открыть</a>
+                            <a asp-page="Edit" asp-route-id="@eventItem.Id" class="btn btn-sm btn-warning">Изменить</a>
+                            <a asp-page="Delete" asp-route-id="@eventItem.Id" class="btn btn-sm btn-danger">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

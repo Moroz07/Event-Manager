@@ -1,40 +1,33 @@
 ﻿@page
 @model EventManager.Pages.EventParticipants.IndexModel
 @{
+    ViewData["Title"] = "Список участников";
 }
 
-<h1>Список участников</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Список участников</h2>
+        <a asp-page="Create" class="btn btn-success">Добавить нового участника</a>
+    </div>
 
-<p>
-    <a asp-page="Create">Добавить нового участника</a>
-</p>
-
-<table border="1" cellpadding="5">
-    <thead>
-        <tr>
-            <th>Имя</th>
-            <th>Фамилия</th>
-            <th>Email</th>
-            <th>Телефон</th>
-            <th>ID мероприятия</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="row g-4">
         @foreach (var participant in Model.Participants)
         {
-            <tr>
-                <td>@participant.Name</td>
-                <td>@participant.LastName</td>
-                <td>@participant.Email</td>
-                <td>@participant.Phone</td>
-                <td>@participant.EventId</td>
-                <td>
-                    <a asp-page="Details" asp-route-id="@participant.Id">Открыть</a>
-                    <a asp-page="Edit" asp-route-id="@participant.Id">Изменить</a>
-                    <a asp-page="Delete" asp-route-id="@participant.Id">Удалить</a>
-                </td>
-            </tr>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate">👤 @participant.Name @participant.LastName</h5>
+                        <p class="card-text text-muted mb-1"><strong>Email:</strong> @participant.Email</p>
+                        <p class="card-text text-muted mb-1"><strong>Телефон:</strong> @participant.Phone</p>
+                        <p class="card-text mb-2"><span class="badge bg-secondary">ID мероприятия: @participant.EventId</span></p>
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="Details" asp-route-id="@participant.Id" class="btn btn-sm btn-info">Открыть</a>
+                            <a asp-page="Edit" asp-route-id="@participant.Id" class="btn btn-sm btn-warning">Изменить</a>
+                            <a asp-page="Delete" asp-route-id="@participant.Id" class="btn btn-sm btn-danger">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

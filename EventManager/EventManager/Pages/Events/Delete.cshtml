@@ -1,22 +1,33 @@
 ﻿@page "{id:int}"
 @model EventManager.Pages.Events.DeleteModel
 @{
+    ViewData["Title"] = "Удалить мероприятие";
 }
 
-<h1>Удалить мероприятие</h1>
-
-<h3>Вы уверены?</h3>
-
-<div>
-    <p><strong>@Model.Event.Name</strong></p>
-    <p>Дата: @Model.Event.EventDate.ToShortDateString()</p>
-    <p>Место: @Model.Event.location</p>
-    <p>Номер: @Model.Event.EventId</p>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-danger shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Удалить мероприятие</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">Вы уверены, что хотите удалить это мероприятие?</div>
+                    <div class="mb-3">
+                        <h5 class="card-title">📅 @Model.Event.Name</h5>
+                        <p class="card-text"><strong>Дата проведения:</strong> @Model.Event.EventDate.ToShortDateString()</p>
+                        <p class="card-text"><strong>Место проведения:</strong> @Model.Event.location</p>
+                        <p class="card-text"><strong>Номер мероприятия:</strong> <span class="badge bg-secondary">№ @Model.Event.Id</span></p>
+                    </div>
+                    <form method="post">
+                        <input type="hidden" asp-for="Event.Id" />
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="Index" class="btn btn-secondary">Отмена</a>
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<form method="post">
-    <input type="hidden" asp-for="Event.Id" />
-    <button type="submit">Удалить</button>
-</form>
-
-<a asp-page="Index">Отмена</a>

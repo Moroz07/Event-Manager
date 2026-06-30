@@ -1,39 +1,56 @@
 ﻿@page
 @model EventManager.Pages.EventParticipants.CreateModel
 @{
+    ViewData["Title"] = "Добавить участника";
 }
 
-<h1>Добавить участника</h1>
-
-<form method="post">
-    <div>
-        <label>Имя</label><br />
-        <input asp-for="Participant.Name" />
-        <span asp-validation-for="Participant.Name"></span>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Добавить участника</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="Participant.Name" class="form-label">Имя</label>
+                            <input asp-for="Participant.Name" class="form-control" />
+                            <span asp-validation-for="Participant.Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Participant.LastName" class="form-label">Фамилия</label>
+                            <input asp-for="Participant.LastName" class="form-control" />
+                            <span asp-validation-for="Participant.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Participant.Email" class="form-label">Email</label>
+                            <input asp-for="Participant.Email" type="email" class="form-control" />
+                            <span asp-validation-for="Participant.Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Participant.Phone" class="form-label">Телефон</label>
+                            <input asp-for="Participant.Phone" class="form-control" />
+                            <span asp-validation-for="Participant.Phone" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Participant.EventId" class="form-label">Мероприятие</label>
+                            <select asp-for="Participant.EventId" class="form-control" asp-items="Model.EventsList">
+                                <option value="">-- Выберите мероприятие --</option>
+                            </select>
+                            <span asp-validation-for="Participant.EventId" class="text-danger"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-page="Index" class="btn btn-secondary">Назад к списку</a>
+                            <button type="submit" class="btn btn-success">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div>
-        <label>Фамилия</label><br />
-        <input asp-for="Participant.LastName" />
-        <span asp-validation-for="Participant.LastName"></span>
-    </div>
-
-    <div>
-        <label>Email</label><br />
-        <input asp-for="Participant.Email" type="email" />
-    </div>
-
-    <div>
-        <label>Телефон</label><br />
-        <input asp-for="Participant.Phone" />
-    </div>
-
-    <div>
-        <label>ID мероприятия</label><br />
-        <input asp-for="Participant.EventId" type="number" />
-    </div>
-
-    <button type="submit">Сохранить</button>
-</form>
-
-<a asp-page="Index">Назад</a>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using EventManager.Data;
 using EventManager.Model;
+using System.Linq;
 
 namespace EventManager.Pages.EventParticipants
 {
@@ -17,16 +19,36 @@ namespace EventManager.Pages.EventParticipants
         [BindProperty]
         public EventParticipsnt Participant { get; set; }
 
-        public void OnGet() { }
+        public List<SelectListItem> EventsList { get; set; }
+
+        public void OnGet()
+        {
+            LoadEventsList();
+        }
+
+        private void LoadEventsList()
+        {
+            EventsList = _context.Events
+                .Select(e => new SelectListItem
+                {
+                    Value = e.Id.ToString(),
+                    Text = $"{e.Name} (дата: {e.EventDate.ToShortDateString()}, место: {e.location})"
+                })
+                .ToList();
+        }
 
         public IActionResult OnPost()
         {
+            var temp = Participant;
+
             if (!ModelState.IsValid)
+            {
+                LoadEventsList();
                 return Page();
+            }
 
             _context.EventsParticipsnt.Add(Participant);
             _context.SaveChanges();
-
             return RedirectToPage("Index");
         }
     }
