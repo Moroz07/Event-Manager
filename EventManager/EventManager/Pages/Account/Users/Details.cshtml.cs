@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using EventManager.Data;
-using EventManager.Model;
+using EventManager.Model.AuthApp;
 
-namespace EventManager.Pages.EventParticipants
+namespace EventManager.Pages.Account.Users
 {
-    [Authorize]
+    [Authorize] 
     public class DetailsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -16,13 +17,13 @@ namespace EventManager.Pages.EventParticipants
             _context = context;
         }
 
-        public EventParticipsnt Participant { get; set; }
+        public AuthUser User { get; set; }
 
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Participant = _context.EventsParticipsnt.FirstOrDefault(p => p.Id == id);
+            User = await _context.AuthUsers.FindAsync(id);
 
-            if (Participant == null)
+            if (User == null)
                 return NotFound();
 
             return Page();

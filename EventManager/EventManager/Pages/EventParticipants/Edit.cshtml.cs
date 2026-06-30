@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using EventManager.Data;
@@ -5,22 +6,37 @@ using EventManager.Model;
 
 namespace EventManager.Pages.EventParticipants
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        public EditModel(ApplicationDbContext context) => _context = context;
-        [BindProperty] public EventParticipsnt Participant { get; set; }
+
+        public EditModel(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        [BindProperty]
+        public EventParticipsnt Participant { get; set; }
+
         public IActionResult OnGet(int id)
         {
             Participant = _context.EventsParticipsnt.Find(id);
-            if (Participant == null) return NotFound();
+
+            if (Participant == null)
+                return NotFound();
+
             return Page();
         }
+
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid) return Page();
+            if (!ModelState.IsValid)
+                return Page();
+
             _context.EventsParticipsnt.Update(Participant);
             _context.SaveChanges();
+
             return RedirectToPage("Index");
         }
     }

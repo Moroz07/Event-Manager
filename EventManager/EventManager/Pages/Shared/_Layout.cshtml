@@ -1,4 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@using EventManager.Data
+@*++ авторизация*@
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ApplicationDbContext _context
+@{
+    var user = HttpContextAccessor.HttpContext?.User;
+    var isAuthenticated = user?.Identity?.IsAuthenticated ?? false;
+    var userName = user?.Identity?.Name ?? "";
+    var isAdmin = user?.IsInRole("Admin") ?? false;
+    var userId = user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+    byte[]? userAvatar = null;
+    if (isAuthenticated)
+    {
+        var currentUser = _context.AuthUsers.FirstOrDefault(u => u.Email == userName);
+        userAvatar = currentUser?.Avatar;
+    }
+}
+@*-- авторизация*@
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,23 +42,59 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Домашняя</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Events/Index">Events</a>
+                            <a class="nav-link text-dark" asp-page="/Events/Index">Мероприятия</a>
                         </li>
                         <li class="nav-item">
-    <a class="nav-link text-dark" asp-page="/EventParticipants/Index">Participants</a>
-</li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-page="/EventParticipants/Index">Участники</a>
                         </li>
-                        <ul class="navbar-nav ms-auto">
+                        @if (isAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Account/Users/Index">Пользователи</a>
+                            </li>
+                        }
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto">
+                        @if (!isAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Account/Login">Войти</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Account/Register">Регистрация</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                    @if (userAvatar != null && userAvatar.Length > 0)
+                                    {
+                                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(userAvatar)"
+                                             style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; margin-right: 8px;" />
+                                    }
+                                    else
+                                    {
+                                        <span style="font-size: 20px; margin-right: 5px;">👤</span>
+                                    }
+                                    @userName
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-page="/Account/Logout">Выход</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @*+++ темная тема*@
                         <li class="nav-item">
                             <button class="btn btn-outline-secondary" onclick="toggleTheme()">🌓 Переключить тему</button>
                         </li>
-
-                    </ul>
+                        @*--- темная тема*@
                     </ul>
                 </div>
             </div>
@@ -52,7 +109,6 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2026 - EventManager - <a asp-area="" asp-page="/Privacy">Privacy</a>
-
         </div>
     </footer>
 
@@ -60,22 +116,24 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            if (body.getAttribute('data-bs-theme') === 'dark') {
+                body.removeAttribute('data-bs-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-bs-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.setAttribute('data-bs-theme', 'dark');
+        }
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-<script>
-    const html = document.documentElement;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    html.setAttribute("data-bs-theme", prefersDark ? "dark" : "light");
-
-    // отслеживание изменения темы в системе
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
-        html.setAttribute("data-bs-theme", e.matches ? "dark" : "light");
-    });
-
-    function toggleTheme() {
-        const html = document.documentElement;
-        const currentTheme = html.getAttribute("data-bs-theme");
-        html.setAttribute("data-bs-theme", currentTheme === "dark" ? "light" : "dark");
-    }
-</script>

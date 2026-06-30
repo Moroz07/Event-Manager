@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using EventManager.Data;
-using EventManager.Model;
+using EventManager.Model.AuthApp;
 
-namespace EventManager.Pages.EventParticipants
+namespace EventManager.Pages.Account.Users
 {
     [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
@@ -17,26 +17,26 @@ namespace EventManager.Pages.EventParticipants
         }
 
         [BindProperty]
-        public EventParticipsnt Participant { get; set; }
+        public AuthUser User { get; set; }
 
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Participant = _context.EventsParticipsnt.Find(id);
+            User = await _context.AuthUsers.FindAsync(id);
 
-            if (Participant == null)
+            if (User == null)
                 return NotFound();
 
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            var participant = _context.EventsParticipsnt.Find(Participant.Id);
+            var user = await _context.AuthUsers.FindAsync(User.Id);
 
-            if (participant != null)
+            if (user != null)
             {
-                _context.EventsParticipsnt.Remove(participant);
-                _context.SaveChanges();
+                _context.AuthUsers.Remove(user);
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("Index");
